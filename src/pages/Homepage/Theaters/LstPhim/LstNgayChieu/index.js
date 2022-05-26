@@ -7,6 +7,7 @@ import { DATE_BEGIN_DANGCHIEU } from "../../../../../constants/config";
 
 export default function LstGioChieu({ lstLichChieuTheoPhim }) {
   const classes = useStyles();
+
   const mangChiChuaNgay = lstLichChieuTheoPhim
     // .filter(
     //   (data) => data.ngayChieuGioChieu.slice(0, 10) > DATE_BEGIN_DANGCHIEU
