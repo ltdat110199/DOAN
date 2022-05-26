@@ -1,9 +1,9 @@
-import { makeStyles } from "@material-ui/core"
-import { underLine } from '../../../styles/materialUi'
+import { makeStyles } from "@material-ui/core";
+import { underLine } from "../../../styles/materialUi";
 
 const useStyles = makeStyles({
   modal: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 17,
     width: "fit-content",
     borderRadius: "20px",
@@ -16,11 +16,11 @@ const useStyles = makeStyles({
 
   over10: {
     display: "flex",
-    flexDirection: 'column',
+    flexDirection: "column",
     justifyContent: "space-evenly",
     padding: 10,
-    maxWidth: props => props.isMobile ? "auto" : "480px",
-    alignItems: 'center',
+    maxWidth: (props) => (props.isMobile ? "auto" : "480px"),
+    alignItems: "center",
   },
   notification: {
     width: 80,
@@ -29,32 +29,35 @@ const useStyles = makeStyles({
   },
   textOver: {
     padding: "10px 20px",
-    width: '100%',
-    ...underLine
+    width: "100%",
+    ...underLine,
   },
   btnOver: {
     color: "#fb4226",
     border: "1.2px solid #fb4226",
     borderRadius: "20px",
     marginTop: 10,
-    '&:hover': {
+    "&:hover": {
       color: "#fff",
       backgroundColor: "#fb4226",
     },
   },
-
+  box: {
+    padding: "0 0 30px 0",
+  },
   spaceEvenly: {
     width: "100%",
-    display: 'flex',
-    justifyContent: 'space-evenly',
+    display: "flex",
+    justifyContent: "space-evenly",
     paddingBottom: 30,
+    gap: 20,
   },
   btnResult: {
     color: "#fff",
     padding: "6px 17px",
     borderRadius: "20px",
     backgroundImage: "linear-gradient(223deg,#b4ec51 0,#429321 100%)",
-    '&:hover': {
+    "&:hover": {
       color: "#fff",
       backgroundImage: "linear-gradient(223deg,#5d9004 0,#1f5f04 100%)",
     },
@@ -62,13 +65,11 @@ const useStyles = makeStyles({
 
   txtClick: {
     color: "#f79320",
-    cursor: 'pointer',
-    '&:hover': {
+    cursor: "pointer",
+    "&:hover": {
       color: "#0056b3",
       textDecoration: "initial",
-    }
+    },
   },
-
-
-})
-export default useStyles
+});
+export default useStyles;

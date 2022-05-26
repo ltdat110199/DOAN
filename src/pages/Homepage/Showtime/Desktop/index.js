@@ -38,7 +38,7 @@ export default function Desktop({ arrayData, value }) {
     slidesToShow: 1,
     speed: 500,
     rows: 2,
-    slidesPerRow: 5,
+    slidesPerRow: 4,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };

@@ -16,7 +16,6 @@ export default function Homepage() {
   const dispatch = useDispatch();
   const movieList = useSelector((state) => state.movieReducer.movieList);
   const theaterList = useSelector((state) => state.theaterReducer.theaterList);
-
   useEffect(() => {
     if (!movieList.length) {
       dispatch(getMovieList());

@@ -44,6 +44,7 @@ export default function MoviesManagement() {
   const { theaterList2, loadingTheaterList2 } = useSelector(
     (state) => state.theaterReducer
   );
+  const movieList = useSelector((state) => state.movieReducer.movieList);
   const { loadingCreateShowtime, successCreateShowtime, errorCreateShowtime } =
     useSelector((state) => state.bookTicketReducer);
   const movieList2 = useSelector((state) => state.movieReducer.movieList2);
@@ -132,6 +133,7 @@ export default function MoviesManagement() {
       ];
     }, []);
     setLichChieuDisplay(showTimeList);
+    console.log(showTimeList);
   }, [theaterList2]);
 
   useEffect(() => {

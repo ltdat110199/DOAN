@@ -1,22 +1,30 @@
-import { makeStyles } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
-  lstPhim: props => ({
+  lstPhim: (props) => ({
     flex: "0 0 60%",
     height: "705px",
-    overflowY: 'auto',
+    overflowY: "auto",
     borderLeft: "1px solid #ebebec",
-    ...props.customScrollbar
+    ...props.customScrollbar,
   }),
-  phim: props => ({
+  phim: (props) => ({
     paddingBottom: "17px",
     paddingTop: "20px",
     paddingRight: "15px",
     paddingLeft: "20px",
-    ...props.underLine
+    ...props.underLine,
+  }),
+  phimNone: (props) => ({
+    paddingBottom: "17px",
+    paddingTop: "20px",
+    paddingRight: "15px",
+    paddingLeft: "20px",
+    ...props.underLine,
+    display: "none",
   }),
   phim__info: {
-    display: 'flex',
+    display: "flex",
   },
   phim__img: {
     width: 50,
@@ -24,13 +32,13 @@ const useStyles = makeStyles({
     objectFit: "cover",
   },
   phim__text: {
-    paddingLeft: "15px", paddingTop: "6px",
+    paddingLeft: "15px",
+    paddingTop: "6px",
     width: "calc(100% - 50px)",
   },
   phim__text_name: {
     fontWeight: 500,
     textTransform: "capitalize",
   },
-
 });
-export default useStyles
+export default useStyles;

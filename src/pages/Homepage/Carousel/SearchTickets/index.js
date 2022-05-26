@@ -439,6 +439,7 @@ export default function SearchStickets() {
             <MenuItem
               value={suatChieu}
               key={suatChieu}
+              disabled={suatChieu < new Date()}
               classes={{
                 root: classes.menu__item,
                 selected: classes["menu__item--selected"],
@@ -449,10 +450,10 @@ export default function SearchStickets() {
           ))}
         </Select>
       </FormControl>
-
+      {console.log(data)}
       <FormControl className={classes["search__item--next"]}>
         <Button
-          disabled={!data.maLichChieu} // khi không có dữ liệu > disabled cần set true
+          disabled={!data.maLichChieu && data.setNgayXem < new Date()} // khi không có dữ liệu > disabled cần set true
           classes={{
             root: classes.btn,
             disabled: classes.btnDisabled,

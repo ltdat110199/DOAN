@@ -7,11 +7,12 @@ import StepLabel from "@material-ui/core/StepLabel";
 import SeatIcon from "@material-ui/icons/CallToActionRounded";
 import PaymentIcon from "@material-ui/icons/Payment";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { useStyles, ColorlibConnector } from "./style";
 import { FAKE_AVATAR } from "../../../../constants/config";
+import { LOADING_BACKTO_HOME } from "../../../../reducers/constants/Lazy";
 
 export default function Stepcheckout() {
   const history = useHistory();
@@ -19,7 +20,7 @@ export default function Stepcheckout() {
   const activeStep = useSelector((state) => state.bookTicketReducer.activeStep);
   const currentUser = useSelector((state) => state.authReducer.currentUser);
   const steps = ["CHỌN GHẾ", "THANH TOÁN", "KẾT QUẢ ĐẶT VÉ"];
-
+  const dispatch = useDispatch();
   function StepIcon(props) {
     const { active, completed } = props;
     const icons = {
@@ -41,9 +42,15 @@ export default function Stepcheckout() {
   const handleUser = () => {
     history.push("/taikhoan");
   };
-
+  const handleClickLogo = () => {
+    dispatch({ type: LOADING_BACKTO_HOME });
+    history.push("/");
+  };
   return (
     <div className={classes.root}>
+      <div className={classes.logo} onClick={handleClickLogo}>
+        <img src="/img/headTixLogo.png" alt="logo" style={{ height: 80 }} />
+      </div>
       <Stepper
         alternativeLabel
         activeStep={activeStep}

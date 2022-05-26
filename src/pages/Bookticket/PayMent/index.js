@@ -3,12 +3,21 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import useStyles from "./style";
+
 import formatDate from "../../../utilities/formatDate";
 import { bookTicket } from "../../../reducers/actions/BookTicket";
 import {
   SET_DATA_PAYMENT,
   SET_READY_PAYMENT,
 } from "../../../reducers/constants/BookTicket";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 
 const makeObjError = (name, value, dataSubmit) => {
   // kiểm tra và set lỗi rỗng
@@ -62,6 +71,15 @@ export default function PayMent() {
   const emailRef = useRef();
   const phoneRef = useRef(); // dùng useRef để dom tớ element
   let variClear = useRef(""); // dùng useRef để lưu lại giá trị setTimeout
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const [dataFocus, setDataFocus] = useState({ phone: false, email: false });
   const [dataSubmit, setdataSubmit] = useState({
     values: {
@@ -156,6 +174,7 @@ export default function PayMent() {
       // dispatch(bookTicket({ maLichChieu: 40396, danhSachVe: [{ maGhe: 9122569, giaVe: 75000 }], taiKhoanNguoiDung }))
     }
   };
+
   const onFocus = (e) => {
     setDataFocus({ ...dataFocus, [e.target.name]: true });
   };
@@ -164,183 +183,215 @@ export default function PayMent() {
   };
 
   return (
-    <aside className={classes.payMent}>
-      <div>
-        {/* tổng tiền */}
-        <p className={`${classes.amount} ${classes.payMentItem}`}>
-          {`${amount.toLocaleString("vi-VI")} đ`}
-        </p>
-
-        {/* thông tin phim và rạp */}
-        <div className={classes.payMentItem}>
-          <p className={classes.tenPhim}>{thongTinPhim?.tenPhim}</p>
-          <p>{thongTinPhim?.tenCumRap}</p>
-          <p>{`${thongTinPhim && formatDate(thongTinPhim.ngayChieu).dayToday} ${
-            thongTinPhim?.ngayChieu
-          } - ${thongTinPhim?.gioChieu} - ${thongTinPhim?.tenRap}`}</p>
-        </div>
-
-        {/* ghế đã chọn */}
-        <div className={`${classes.seatInfo} ${classes.payMentItem}`}>
-          <span>{`Ghế ${listSeatSelected?.join(", ")}`}</span>
-          <p className={classes.amountLittle}>
+    <>
+      <aside className={classes.payMent}>
+        <div>
+          {/* tổng tiền */}
+          <p className={`${classes.amount} ${classes.payMentItem}`}>
             {`${amount.toLocaleString("vi-VI")} đ`}
           </p>
-        </div>
 
-        {/* email */}
-        <div className={classes.payMentItem}>
-          <label className={classes.labelEmail}>E-Mail</label>
-          <input
-            type="text"
-            name="email"
-            ref={emailRef}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            value={dataSubmit.values.email}
-            className={classes.fillInEmail}
-            onChange={onChange}
-            autoComplete="off"
-          />
-          <p className={classes.error}>{dataSubmit.errors.email}</p>
-        </div>
+          {/* thông tin phim và rạp */}
+          <div className={classes.payMentItem}>
+            <p className={classes.tenPhim}>{thongTinPhim?.tenPhim}</p>
+            <p>{thongTinPhim?.tenCumRap}</p>
+            <p>{`${
+              thongTinPhim && formatDate(thongTinPhim.ngayChieu).dayToday
+            } ${thongTinPhim?.ngayChieu} - ${thongTinPhim?.gioChieu} - ${
+              thongTinPhim?.tenRap
+            }`}</p>
+          </div>
 
-        {/* phone */}
-        <div className={classes.payMentItem}>
-          <label className={classes.labelPhone}>Phone</label>
-          <input
-            type="number"
-            name="phone"
-            ref={phoneRef}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            value={dataSubmit.values.phone}
-            className={classes.fillInPhone}
-            onChange={onChange}
-            autoComplete="off"
-          />
-          <p className={classes.error}>{dataSubmit.errors.phone}</p>
-        </div>
+          {/* ghế đã chọn */}
+          <div className={`${classes.seatInfo} ${classes.payMentItem}`}>
+            <span>{`Ghế ${listSeatSelected?.join(", ")}`}</span>
+            <p className={classes.amountLittle}>
+              {`${amount.toLocaleString("vi-VI")} đ`}
+            </p>
+          </div>
 
-        {/* Mã giảm giá */}
-        <div className={classes.payMentItem}>
-          <label className={classes.label}>Mã giảm giá</label>
-          <input
-            type="text"
-            value="Tạm thời không hỗ trợ..."
-            readOnly
-            className={classes.fillIn}
-          />
-          <button className={classes.btnDiscount} disabled>
-            Áp dụng
-          </button>
-        </div>
+          {/* email */}
+          <div className={classes.payMentItem}>
+            <label className={classes.labelEmail}>E-Mail</label>
+            <input
+              type="text"
+              name="email"
+              ref={emailRef}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              value={dataSubmit.values.email}
+              className={classes.fillInEmail}
+              onChange={onChange}
+              autoComplete="off"
+            />
+            <p className={classes.error}>{dataSubmit.errors.email}</p>
+          </div>
 
-        {/* hình thức thanh toán */}
-        <div className={classes.selectedPayMentMethod}>
-          <label className={classes.label}>Hình thức thanh toán</label>
-          <p className={classes.toggleNotice}>
-            Vui lòng chọn ghế để hiển thị phương thức thanh toán phù hợp.
-          </p>
+          {/* phone */}
+          <div className={classes.payMentItem}>
+            <label className={classes.labelPhone}>Phone</label>
+            <input
+              type="number"
+              name="phone"
+              ref={phoneRef}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              value={dataSubmit.values.phone}
+              className={classes.fillInPhone}
+              onChange={onChange}
+              autoComplete="off"
+            />
+            <p className={classes.error}>{dataSubmit.errors.phone}</p>
+          </div>
 
-          <div className={classes.formPayment}>
-            <div className={classes.formPaymentItem}>
-              <input
-                className={classes.input}
-                type="radio"
-                name="paymentMethod"
-                value="ZaloPay"
-                onChange={onChange}
-                checked={dataSubmit.values.paymentMethod === "ZaloPay"}
-              />
-              <img
-                className={classes.img}
-                src="/img/bookticket/zalo.jpg"
-                alt="zalopay"
-              />
-              <label>Thanh toán qua ZaloPay</label>
+          {/* Mã giảm giá */}
+          <div className={classes.payMentItem}>
+            <label className={classes.label}>Mã giảm giá</label>
+            <input
+              type="text"
+              value="Tạm thời không hỗ trợ..."
+              readOnly
+              className={classes.fillIn}
+            />
+            <button className={classes.btnDiscount} disabled>
+              Áp dụng
+            </button>
+          </div>
+
+          {/* hình thức thanh toán */}
+          <div className={classes.selectedPayMentMethod}>
+            <label className={classes.label}>Hình thức thanh toán</label>
+            <p className={classes.toggleNotice}>
+              Vui lòng chọn ghế để hiển thị phương thức thanh toán phù hợp.
+            </p>
+
+            <div className={classes.formPayment}>
+              <div className={classes.formPaymentItem}>
+                <input
+                  className={classes.input}
+                  type="radio"
+                  name="paymentMethod"
+                  value="ZaloPay"
+                  onChange={onChange}
+                  checked={dataSubmit.values.paymentMethod === "ZaloPay"}
+                />
+                <img
+                  className={classes.img}
+                  src="/img/bookticket/zalo.jpg"
+                  alt="zalopay"
+                />
+                <label>Thanh toán qua ZaloPay </label>
+              </div>
+              {/* <div className={classes.formPaymentItem}>
+                <input
+                  className={classes.input}
+                  type="radio"
+                  name="paymentMethod"
+                  value="Visa, Master, JCB"
+                  onChange={onChange}
+                  checked={
+                    dataSubmit.values.paymentMethod === "Visa, Master, JCB"
+                  }
+                />
+                <img
+                  className={classes.img}
+                  src="/img/bookticket/visa.png"
+                  alt="visa"
+                />
+                <label>Visa, Master, JCB</label>
+              </div>
+              <div className={classes.formPaymentItem}>
+                <input
+                  className={classes.input}
+                  type="radio"
+                  name="paymentMethod"
+                  value="ATM nội địa"
+                  onChange={onChange}
+                  checked={dataSubmit.values.paymentMethod === "ATM nội địa"}
+                />
+                <img
+                  className={classes.img}
+                  src="/img/bookticket/atm.png"
+                  alt="atm"
+                />
+                <label>Thẻ ATM nội địa</label>
+              </div> */}
+              <div className={classes.formPaymentItem}>
+                <input
+                  className={classes.input}
+                  type="radio"
+                  name="paymentMethod"
+                  value="Cửa hàng tiện ích"
+                  onChange={onChange}
+                  checked={
+                    dataSubmit.values.paymentMethod === "Cửa hàng tiện ích"
+                  }
+                />
+                <img
+                  className={classes.img}
+                  src="/img/bookticket/cuahang.png"
+                  alt="cuahang"
+                />
+                <label>Thanh toán tại cửa hàng tiện ích</label>
+              </div>
             </div>
-            <div className={classes.formPaymentItem}>
-              <input
-                className={classes.input}
-                type="radio"
-                name="paymentMethod"
-                value="Visa, Master, JCB"
-                onChange={onChange}
-                checked={
-                  dataSubmit.values.paymentMethod === "Visa, Master, JCB"
-                }
-              />
-              <img
-                className={classes.img}
-                src="/img/bookticket/visa.png"
-                alt="visa"
-              />
-              <label>Visa, Master, JCB</label>
-            </div>
-            <div className={classes.formPaymentItem}>
-              <input
-                className={classes.input}
-                type="radio"
-                name="paymentMethod"
-                value="ATM nội địa"
-                onChange={onChange}
-                checked={dataSubmit.values.paymentMethod === "ATM nội địa"}
-              />
-              <img
-                className={classes.img}
-                src="/img/bookticket/atm.png"
-                alt="atm"
-              />
-              <label>Thẻ ATM nội địa</label>
-            </div>
-            <div className={classes.formPaymentItem}>
-              <input
-                className={classes.input}
-                type="radio"
-                name="paymentMethod"
-                value="Cửa hàng tiện ích"
-                onChange={onChange}
-                checked={
-                  dataSubmit.values.paymentMethod === "Cửa hàng tiện ích"
-                }
-              />
-              <img
-                className={classes.img}
-                src="/img/bookticket/cuahang.png"
-                alt="cuahang"
-              />
-              <label>Thanh toán tại cửa hàng tiện ích</label>
-            </div>
+          </div>
+
+          {/* đặt vé */}
+          <div className={classes.bottomSection}>
+            <button
+              className={classes.btnDatVe}
+              disabled={!isReadyPayment}
+              onClick={handleClickOpen}
+            >
+              <p className={classes.txtDatVe}>Đặt Vé</p>
+            </button>
           </div>
         </div>
 
-        {/* đặt vé */}
-        <div className={classes.bottomSection}>
-          <button
-            className={classes.btnDatVe}
-            disabled={!isReadyPayment}
-            onClick={handleBookTicket}
-          >
-            <p className={classes.txtDatVe}>Đặt Vé</p>
-          </button>
+        {/* notice */}
+        <div className={classes.notice}>
+          <img
+            className={classes.imgNotice}
+            src="/img/bookticket/exclamation.png"
+            alt="notice"
+          />
+          <span>Vé đã mua không thể đổi hoặc hoàn tiền</span>
+          <p>
+            Mã vé sẽ được gửi qua tin nhắn{" "}
+            <span className={classes.contactColor}>ZMS</span> (tin nhắn Zalo) và{" "}
+            <span className={classes.contactColor}>Email</span> đã nhập.
+          </p>
         </div>
-      </div>
-
-      {/* notice */}
-      <div className={classes.notice}>
-        <img
-          className={classes.imgNotice}
-          src="/img/bookticket/exclamation.png"
-          alt="notice"
-        />
-        <span>Vé đã mua không thể đổi hoặc hoàn tiền</span>
-        <p>
-          Mã vé sẽ được gửi qua tin nhắn{" "}
-          <span className={classes.contactColor}>ZMS</span> (tin nhắn Zalo) và{" "}
-          <span className={classes.contactColor}>Email</span> đã nhập.
-        </p>
-      </div>
-    </aside>
+      </aside>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <div className={classes.resultBookticket}>
+          <DialogTitle id="alert-dialog-title">{" Xác nhận đặt?"}</DialogTitle>
+          <img
+            className={classes.imgNotice}
+            src="/img/bookticket/exclamation.png"
+            alt="notice"
+          />
+          <span>Vé đã mua không thể đổi hoặc hoàn tiền</span>
+          <DialogActions style={{ justifyContent: "center" }}>
+            <Button classes={{ root: classes.btnResult }} onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              classes={{ root: classes.btnResult }}
+              onClick={handleBookTicket}
+              autoFocus
+            >
+              Confirm
+            </Button>
+          </DialogActions>
+        </div>
+      </Dialog>
+    </>
   );
 }

@@ -1,28 +1,30 @@
-import { makeStyles, withStyles } from "@material-ui/core"
-import StepConnector from '@material-ui/core/StepConnector';
+import { makeStyles, withStyles } from "@material-ui/core";
+import StepConnector from "@material-ui/core/StepConnector";
 
-const useStyles = makeStyles(theme => ({
-
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: "100%",
     boxShadow: "0 0 15px rgb(0 0 0 / 30%)",
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: "flex",
+
     padding: 10,
     height: 100,
   },
   stepper: {
     padding: 0,
-    flexBasis: '80%',
+    flexBasis: "80%",
   },
   label: {
-    marginTop: '7px !important',
+    marginTop: "7px !important",
     color: "#9b9b9b",
     fontSize: 16,
   },
+  logo: {
+    cursor: "pointer",
+  },
   account: {
     cursor: "pointer",
-    textAlign: 'center',
+    textAlign: "center",
     textTransform: "uppercase",
     flex: "0 0 150px",
   },
@@ -39,49 +41,45 @@ const useStyles = makeStyles(theme => ({
   },
 
   stepIcon: {
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
     zIndex: 1,
-    color: '#fff',
+    color: "#fff",
     width: 50,
     height: 50,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    borderRadius: "50%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   stepIconActive: {
-    backgroundImage:
-      'linear-gradient(223deg,#b4ec51 0,#429321 100%)',
-    boxShadow: '0 0 11px 11px rgba(180, 236, 81,.25)',
+    backgroundImage: "linear-gradient(223deg,#b4ec51 0,#429321 100%)",
+    boxShadow: "0 0 11px 11px rgba(180, 236, 81,.25)",
   },
   stepIconCompleted: {
-    backgroundImage: 'linear-gradient(223deg,#b4ec51 0,#429321 100%)',
+    backgroundImage: "linear-gradient(223deg,#b4ec51 0,#429321 100%)",
   },
-}))
-
+}));
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
     top: 22,
   },
   active: {
-    '& $line': {
-      backgroundImage:
-        'linear-gradient(223deg,#b4ec51 0,#429321 100%)',
+    "& $line": {
+      backgroundImage: "linear-gradient(223deg,#b4ec51 0,#429321 100%)",
     },
   },
   completed: {
-    '& $line': {
-      backgroundImage:
-        'linear-gradient(223deg,#b4ec51 0,#429321 100%)'
+    "& $line": {
+      backgroundImage: "linear-gradient(223deg,#b4ec51 0,#429321 100%)",
     },
   },
   line: {
     height: 3,
     border: 0,
-    backgroundColor: '#eaeaf0',
+    backgroundColor: "#eaeaf0",
     borderRadius: 1,
   },
 })(StepConnector);
 
-export { useStyles, ColorlibConnector }
+export { useStyles, ColorlibConnector };

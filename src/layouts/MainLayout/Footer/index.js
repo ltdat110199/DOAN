@@ -340,8 +340,11 @@ export default function Footer() {
           </div>
           <div className={`col-12 col-md-9 p-1 text-center text-lg-left`}>
             <span>TTCN - MY PROJECT</span>
+            <br />
             <span>Địa chỉ: Đại học Vinh, Nghệ An, Việt Nam.</span>
+            <br />
             <span>Số Điện Thoại (Hotline): 0963996818</span>
+            <br />
             <p>
               Email: <span className="d-inline">ltdat110199@gmail.com</span>
             </p>

@@ -55,7 +55,10 @@ export default function Modal() {
     dispatch({ type: LOADING_BACKTO_HOME });
     history.push("/");
   };
-
+  const handleBackUserPage = () => {
+    dispatch({ type: RESET_DATA_BOOKTICKET });
+    history.push("/taikhoan");
+  };
   return (
     <Dialog
       open={timeOut || (isBookticket && !isMobile) || alertOver10}
@@ -98,19 +101,27 @@ export default function Modal() {
         isBookticket && ( // chỉ open modal khi là desktop và đã đạt vé
           <>
             <ResultBookticket />
-            <div className={classes.spaceEvenly}>
+            <div className={classes.box}>
+              <div className={classes.spaceEvenly}>
+                <Button
+                  classes={{ root: classes.btnResult }}
+                  onClick={handleReBooking}
+                >
+                  {successBookingTicketMessage && "Mua thêm vé phim này"}
+                  {errorBookTicketMessage && "Thử mua lại"}
+                </Button>
+                <Button
+                  classes={{ root: classes.btnResult }}
+                  onClick={handleCombackHome}
+                >
+                  Quay về trang chủ
+                </Button>
+              </div>
               <Button
                 classes={{ root: classes.btnResult }}
-                onClick={handleReBooking}
+                onClick={handleBackUserPage}
               >
-                {successBookingTicketMessage && "Mua thêm vé phim này"}
-                {errorBookTicketMessage && "Thử mua lại"}
-              </Button>
-              <Button
-                classes={{ root: classes.btnResult }}
-                onClick={handleCombackHome}
-              >
-                Quay về trang chủ
+                Quay về trang cá nhân
               </Button>
             </div>
           </>
